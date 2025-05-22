@@ -50,18 +50,13 @@ fun App() {
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                var result by remember { mutableStateOf<String?>(null) }
 
-                LaunchedEffect(Unit) {
-                    try {
-                        result = getLocation()
-                    } catch (e: Exception) {
-
-                    }
+                val status by produceState(initialValue = "Loading...") {
+                    startTracking().collect { value = it }
                 }
 
                 Text(
-                    text = "Your location: ${result ?: "Loading..."}",
+                    text = "Your location: $status",
                     modifier = Modifier.padding(20.dp),
                 )
                 Text(
