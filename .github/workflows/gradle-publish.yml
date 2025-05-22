@@ -47,13 +47,14 @@ jobs:
           ${{ runner.os }}-gradle-
 
     - name: Build and obfuscate jars
-      run: ./gradlew obfuscate
+      run: ./gradlew assemble
 
     - uses: actions/upload-artifact@v4
       with:
         name: all-files
         path: |
           server/build/libs/
+          composeApp/build/dist/wasmJs/productionExecutable/
 
     - name: Publish docker image
       run: ./gradlew publishImage
