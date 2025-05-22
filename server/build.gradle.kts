@@ -38,5 +38,14 @@ ktor {
                 password = providers.environmentVariable("DOCKER_HUB_PASSWORD")
             )
         )
+
+        jib {
+            container {
+                workingDirectory = "/home/container" // pterodactyl based
+                jvmFlags = listOf(
+                    "-XX:+UseNUMA",
+                )
+            }
+        }
     }
 }
