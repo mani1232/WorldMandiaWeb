@@ -27,8 +27,16 @@ kotlin {
     }
     
     sourceSets {
+        wasmJsMain.dependencies {
+            implementation(libs.compass.geolocation.browser)
+        }
         commonMain.dependencies {
             // put your Multiplatform dependencies here
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.compass.geocoder)
+            implementation(libs.compass.geocoder.web)
+            implementation(libs.compass.geolocation)
+            implementation(libs.compass.geolocation.googlemaps)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

@@ -5,3 +5,6 @@ class JVMPlatform: Platform {
 }
 
 actual fun getPlatform(): Platform = JVMPlatform()
+actual suspend fun getLocation(): String? {
+    TODO("Not yet implemented")
+}
