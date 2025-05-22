@@ -51,10 +51,8 @@ jobs:
 
     - uses: actions/upload-artifact@v4
       with:
-        name: all-files
-        path: |
-          server/build/libs/
-          composeApp/build/dist/wasmJs/productionExecutable/
+        name: compose-files
+        path: composeApp/build/dist/wasmJs/productionExecutable/
 
     - name: Publish docker image
       run: ./gradlew publishImage
