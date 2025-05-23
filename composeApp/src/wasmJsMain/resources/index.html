@@ -5,9 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WorldMandiaWeb</title>
     <link type="text/css" rel="stylesheet" href="styles.css">
-    <script type="application/javascript" src="composeApp.js"></script>
 </head>
 <body>
+<div id="loader">
+    <div class="spinner"></div>
+</div>
+
+<script>
+    window.hideLoader = function () {
+        console.log("Hiding loader...");
+        document.getElementById("loader")?.remove();
+    };
+</script>
+
 <canvas id="ComposeTarget"></canvas>
+
+<script type="application/javascript" src="composeApp.js"></script>
+
 </body>
 </html>
