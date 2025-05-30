@@ -24,6 +24,13 @@ dependencies {
     testImplementation(libs.kotlin.testJunit)
 }
 
+tasks.named<ProcessResources>("processResources") {
+    dependsOn(":composeApp:wasmJsProductionExecutableCompileSync")
+    from(project(":composeApp").layout.buildDirectory.dir("dist/wasmJs/productionExecutable")) {
+        into("static")
+    }
+}
+
 ktor {
     docker {
         jreVersion.set(JavaVersion.VERSION_24)

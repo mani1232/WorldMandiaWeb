@@ -8,7 +8,7 @@ import io.ktor.server.routing.*
 import java.nio.file.Files
 import kotlin.io.path.Path
 
-const val filesFolder = "compose-application/"
+const val filesFolder = "static/"
 
 fun main() {
     Files.createDirectories(Path(filesFolder))
@@ -19,7 +19,7 @@ fun main() {
 fun Application.module() {
     routing {
         singlePageApplication {
-            useResources = false
+            useResources = true
             filesPath = filesFolder
             defaultPage = "index.html"
             ignoreFiles {
