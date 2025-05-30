@@ -4,6 +4,7 @@ import io.ktor.server.application.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
 import io.ktor.server.http.content.*
+import io.ktor.server.request.receiveText
 import io.ktor.server.response.respondText
 import io.ktor.server.routing.*
 import java.nio.file.Files
@@ -41,6 +42,7 @@ fun Application.module() {
                     openid.claimed_id: $openidClaimedId
                     Все параметры:
                     ${params.entries().joinToString("\n") { "${it.key} = ${it.value.joinToString()}" }}
+                    Тело: ${call.receiveText()}
                 """.trimIndent())
         }
     }
