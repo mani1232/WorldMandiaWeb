@@ -36,7 +36,7 @@ ktor {
         jreVersion.set(JavaVersion.VERSION_24)
         localImageName.set("worldmandia-web-local")
         imageTag.set(version.toString())
-        customBaseImage.set("azul/zulu-openjdk:24-latest")
+        customBaseImage.set("ghcr.io/graalvm/jdk-community:24-ol9")
 
         externalRegistry.set(
             DockerImageRegistry.dockerHub(
