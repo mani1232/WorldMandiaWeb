@@ -47,7 +47,7 @@ jobs:
           ${{ runner.os }}-gradle-
 
     - name: Build and obfuscate jars
-      run: ./gradlew assemble
+      run: ./gradlew wasmJsBrowserDistribution
 
     - uses: actions/upload-artifact@v4
       with:

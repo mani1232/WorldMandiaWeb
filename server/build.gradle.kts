@@ -20,12 +20,13 @@ dependencies {
     implementation(libs.klogging)
     implementation(libs.ktor.serverCore)
     implementation(libs.ktor.serverCIO)
+    implementation(libs.kotlinx.coroutines)
     testImplementation(libs.ktor.serverTestHost)
     testImplementation(libs.kotlin.testJunit)
 }
 
 tasks.named<ProcessResources>("processResources") {
-    dependsOn(":composeApp:wasmJsProductionExecutableCompileSync")
+    dependsOn(":composeApp:wasmJsBrowserDistribution")
     from(project(":composeApp").layout.buildDirectory.dir("dist/wasmJs/productionExecutable")) {
         into("static")
     }

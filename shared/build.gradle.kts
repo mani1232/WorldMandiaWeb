@@ -37,6 +37,7 @@ kotlin {
             implementation(libs.compass.geocoder.web)
             implementation(libs.compass.geolocation)
             implementation(libs.compass.geolocation.googlemaps)
+            implementation(libs.kotlinx.coroutines)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
