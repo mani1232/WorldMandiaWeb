@@ -1,11 +1,11 @@
 [versions]
 androidx-lifecycle = "2.9.0"
-composeMultiplatform = "1.8.1"
-kotlin = "2.2.0-RC"
+composeMultiplatform = "1.9.0-alpha01"
+kotlin = "2.2.0-RC2"
 ktor = "3.1.3"
-klogging = "0.10.0"
+klogging = "0.10.1"
 datetime = "0.6.2"
-web = "2025.5.8"
+web = "2025.6.2"
 updateVersions = "0.52.0"
 compass = "2.3.0"
 coroutines = "1.10.2"
@@ -29,7 +29,6 @@ compass-geolocation-browser = { module = "dev.jordond.compass:geolocation-browse
 
 klogging = { module = "io.klogging:slf4j-klogging", version.ref = "klogging" }
 ktor-serverCore = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
-ktor-serverNetty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
 ktor-serverCIO = { module = "io.ktor:ktor-server-cio-jvm", version.ref = "ktor" }
 ktor-serverTestHost = { module = "io.ktor:ktor-server-test-host-jvm", version.ref = "ktor" }
 
