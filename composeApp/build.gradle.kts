@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
@@ -26,12 +27,12 @@ kotlin {
             }
         }
         binaries.executable()
+        nodejs()
     }
     
     sourceSets {
         
         commonMain.dependencies {
-            implementation(libs.kotlinx.coroutines)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -39,11 +40,21 @@ kotlin {
             implementation(compose.materialIconsExtended)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+
             implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.kotlinx.browser)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
+            implementation(libs.kotlinx.browser)
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.kotlinx.coroutines)
+            implementation(libs.kotlinx.serializationJson)
+
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
+
             implementation(projects.shared)
         }
+
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }

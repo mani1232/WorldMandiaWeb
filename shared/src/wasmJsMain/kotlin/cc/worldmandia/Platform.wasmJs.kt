@@ -30,5 +30,9 @@ actual suspend fun startTracking(): Flow<String> {
 }
 
 fun locationToString(loc: Location?): String {
-    return if (loc != null) { "LT${loc.coordinates.latitude} and LG${loc.coordinates.longitude} Speed: ${loc.speed}" } else { "null" }
+    return if (loc != null) {
+        "LT${loc.coordinates.latitude} and LG${loc.coordinates.longitude} Speed: ${loc.speed}"
+    } else {
+        "null"
+    }
 }

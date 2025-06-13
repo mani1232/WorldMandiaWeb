@@ -7,9 +7,7 @@ import androidx.compose.ui.window.CanvasBasedWindow
 fun main() {
     hideHtmlLoader()
 
-    CanvasBasedWindow {
-        App()
-    }
+    CanvasBasedWindow { App() }
 }
 
 @JsName("hideLoader")
