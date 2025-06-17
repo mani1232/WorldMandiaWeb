@@ -34,12 +34,17 @@ kotlin {
         
         commonMain.dependencies {
             implementation(compose.runtime)
+            implementation(compose.runtimeSaveable)
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.ui)
+            implementation(compose.uiUtil)
+            implementation(compose.uiTooling)
+            implementation(compose.animation)
+            implementation(compose.animationGraphics)
+            implementation(compose.material3AdaptiveNavigationSuite)
             implementation(compose.materialIconsExtended)
             implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
 
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
@@ -52,11 +57,13 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
 
+            implementation(libs.kstore)
+
             implementation(projects.shared)
         }
 
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
+        wasmJsMain.dependencies {
+            implementation(libs.kstore.storage)
         }
     }
 }
