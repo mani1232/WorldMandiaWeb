@@ -11,30 +11,28 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import io.github.xxfast.kstore.KStore
 import io.github.xxfast.kstore.storage.storeOf
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
 import org.koin.dsl.module
 
-object ThemeState {
-    var isDarkTheme by mutableStateOf(false)
-}
-
 object CurrentState {
     var currentTheme by mutableStateOf(lightColorScheme())
 
-    fun updateTheme() {
-        currentTheme = if (ThemeState.isDarkTheme) darkColorScheme() else lightColorScheme()
+    suspend fun updateTheme(storage: KStore<SavedState>) {
+        storage.update {
+            it?.copy(isDarkTheme = !it.isDarkTheme).also { newState ->
+                currentTheme = if (newState?.isDarkTheme ?: false) darkColorScheme() else lightColorScheme()
+            }
+        }
     }
 }
 
@@ -48,12 +46,10 @@ fun startCompose() {
     KoinApplication(application = {
         modules(
             module {
-                single<KStore<SavedState>> { storeOf(key = "saved_state") }
+                single<KStore<SavedState>> { storeOf(key = "saved_state", default = SavedState()) }
             },
         )
     }) {
-        val storage = koinInject<KStore<SavedState>>()
-
         MaterialTheme(
             colorScheme = CurrentState.currentTheme,
         ) {
@@ -90,20 +86,27 @@ fun mainPage() {
 @OptIn(androidx.compose.animation.ExperimentalAnimationApi::class)
 @Composable
 fun ThemeToggleButton(modifier: Modifier = Modifier) {
+    val scope = rememberCoroutineScope()
+    val storage: KStore<SavedState> = koinInject()
+    var isDark by mutableStateOf(false)
+
     FloatingActionButton(
         onClick = {
-            ThemeState.isDarkTheme = !ThemeState.isDarkTheme
-            CurrentState.updateTheme()
+            scope.launch {
+                CurrentState.updateTheme(storage)
+                isDark = storage.get()?.isDarkTheme ?: false
+            }
+
         },
         modifier = modifier
     ) {
         AnimatedContent(
-            targetState = ThemeState.isDarkTheme,
+            targetState = isDark,
             transitionSpec = {
                 fadeIn() togetherWith fadeOut()
             }
-        ) { isDark ->
-            if (isDark) {
+        ) { isDarkIcon ->
+            if (isDarkIcon) {
                 Icon(
                     imageVector = Icons.Default.LightMode,
                     contentDescription = "Переключить на светлую тему"

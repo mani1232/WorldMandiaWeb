@@ -8,6 +8,7 @@ plugins {
 
 group = "cc.worldmandia"
 version = "1.0.0"
+
 application {
     mainClass.set("cc.worldmandia.ApplicationKt")
     
