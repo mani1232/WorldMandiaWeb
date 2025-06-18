@@ -24,16 +24,42 @@ import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
 import org.koin.dsl.module
 
-object CurrentState {
-    var currentTheme by mutableStateOf(lightColorScheme())
 
-    suspend fun updateTheme(storage: KStore<SavedState>) {
-        storage.update {
-            it?.copy(isDarkTheme = !it.isDarkTheme).also { newState ->
-                currentTheme = if (newState?.isDarkTheme ?: false) darkColorScheme() else lightColorScheme()
+object CurrentState {
+
+    object ThemeState {
+
+        var currentTheme by mutableStateOf(lightColorScheme())
+        var currentThemeState by mutableStateOf(ThemeSelectionType.LOCAL)
+
+        fun isDark() = currentThemeState == ThemeSelectionType.DARK
+
+        suspend fun updateTheme(storage: KStore<SavedState>) {
+            currentThemeState = when (currentThemeState) {
+                ThemeSelectionType.LIGHT -> {
+                    ThemeSelectionType.DARK
+                }
+
+                ThemeSelectionType.DARK -> {
+                    ThemeSelectionType.LIGHT
+                }
+
+                ThemeSelectionType.LOCAL -> if (storage.get()?.isDarkTheme ?: false) {
+                    ThemeSelectionType.DARK
+                } else {
+                    ThemeSelectionType.LIGHT
+                }
+            }
+            currentTheme = if (isDark()) darkColorScheme() else lightColorScheme()
+            storage.update {
+                it?.copy(isDarkTheme = currentThemeState == ThemeSelectionType.DARK)
             }
         }
     }
+}
+
+enum class ThemeSelectionType {
+    LIGHT, DARK, LOCAL
 }
 
 @Serializable
@@ -46,12 +72,12 @@ fun startCompose() {
     KoinApplication(application = {
         modules(
             module {
-                single<KStore<SavedState>> { storeOf(key = "saved_state", default = SavedState()) }
+                single<KStore<SavedState>> { storeOf(key = "saved_state", default = SavedState(), enableCache = true) }
             },
         )
     }) {
         MaterialTheme(
-            colorScheme = CurrentState.currentTheme,
+            colorScheme = CurrentState.ThemeState.currentTheme,
         ) {
             Surface(
                 modifier = Modifier.fillMaxSize(),
@@ -88,20 +114,20 @@ fun mainPage() {
 fun ThemeToggleButton(modifier: Modifier = Modifier) {
     val scope = rememberCoroutineScope()
     val storage: KStore<SavedState> = koinInject()
-    var isDark by mutableStateOf(false)
+    scope.launch {
+        storage.get() // Preload
+    }
 
     FloatingActionButton(
         onClick = {
             scope.launch {
-                CurrentState.updateTheme(storage)
-                isDark = storage.get()?.isDarkTheme ?: false
+                CurrentState.ThemeState.updateTheme(storage)
             }
-
         },
         modifier = modifier
     ) {
         AnimatedContent(
-            targetState = isDark,
+            targetState = CurrentState.ThemeState.isDark(),
             transitionSpec = {
                 fadeIn() togetherWith fadeOut()
             }
