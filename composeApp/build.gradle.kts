@@ -34,11 +34,11 @@ kotlin {
         
         commonMain.dependencies {
             implementation(compose.runtime)
+            implementation(compose.runtimeSaveable)
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.uiUtil)
-            implementation(compose.uiTooling)
             implementation(compose.animation)
             implementation(compose.animationGraphics)
             implementation(compose.material3AdaptiveNavigationSuite)
