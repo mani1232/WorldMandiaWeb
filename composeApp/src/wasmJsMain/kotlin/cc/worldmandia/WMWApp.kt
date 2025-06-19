@@ -78,7 +78,9 @@ fun startCompose() {
     }) {
         val storage: KStore<SavedState> = koinInject()
 
-        rememberCoroutineScope().launch {
+        val scope = rememberCoroutineScope()
+
+        scope.launch {
             CurrentState.ThemeState.updateTheme(storage)
         }
 
