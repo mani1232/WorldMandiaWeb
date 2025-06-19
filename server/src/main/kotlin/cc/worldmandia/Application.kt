@@ -39,10 +39,13 @@ fun Application.module() {
             }
 
         }
-        route("auth") {
-            get {
+        route("/api") {
+            route("/auth") {
+                post("/discord") {
 
+                }
             }
+
         }
     }
 }

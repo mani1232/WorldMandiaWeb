@@ -28,6 +28,12 @@ kotlin {
         }
         binaries.executable()
         nodejs()
+
+        compilerOptions {
+            freeCompilerArgs.addAll(
+                "-Xwasm-use-new-exception-proposal"
+            )
+        }
     }
     
     sourceSets {
