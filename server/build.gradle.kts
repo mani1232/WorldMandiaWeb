@@ -38,7 +38,7 @@ ktor {
         jreVersion.set(JavaVersion.VERSION_24)
         localImageName.set("worldmandia-web-local")
         imageTag.set(version.toString())
-        customBaseImage.set("ghcr.io/graalvm/jdk-community:24-ol9")
+        customBaseImage.set("azul/zulu-openjdk:24-jdk-crac-latest")
         environmentVariable("LC_ALL", "en_US.UTF-8")
 
         externalRegistry.set(
