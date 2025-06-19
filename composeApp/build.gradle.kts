@@ -11,6 +11,9 @@ plugins {
 kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
+        compilerOptions {
+            freeCompilerArgs.add("-Xwasm-attach-js-exception")
+        }
         outputModuleName = "composeApp"
         browser {
             val rootDirPath = project.rootDir.path
@@ -27,13 +30,6 @@ kotlin {
             }
         }
         binaries.executable()
-        nodejs()
-
-        compilerOptions {
-            freeCompilerArgs.addAll(
-                "-Xwasm-use-new-exception-proposal"
-            )
-        }
     }
     
     sourceSets {
