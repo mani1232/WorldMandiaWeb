@@ -39,6 +39,7 @@ ktor {
         localImageName.set("worldmandia-web-local")
         imageTag.set(version.toString())
         customBaseImage.set("ghcr.io/graalvm/jdk-community:24-ol9")
+        environmentVariable("LC_ALL", "en_US.UTF-8")
 
         externalRegistry.set(
             DockerImageRegistry.dockerHub(
