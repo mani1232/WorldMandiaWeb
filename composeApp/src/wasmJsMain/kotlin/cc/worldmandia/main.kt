@@ -8,7 +8,7 @@ import kotlinx.browser.document
 fun main() {
     hideLoader()
 
-    CanvasBasedWindow { startCompose() }
+    CanvasBasedWindow(title = "WorldMandia") { startCompose() }
 }
 
 private fun hideLoader() {
@@ -21,5 +21,4 @@ private fun hideLoader() {
     loadingContainer?.addEventListener("transitionend") {
         loadingContainer.remove()
     }
-    document.title = "WorldMandiaWeb"
 }

@@ -69,21 +69,21 @@ data class SavedState(
 
 @Composable
 fun startCompose() {
+    val scope = rememberCoroutineScope()
+
     KoinApplication(application = {
         modules(
             module {
-                single<KStore<SavedState>> { storeOf(key = "saved_state", default = SavedState(), enableCache = true) }
+                single<KStore<SavedState>> {
+                    val storage = storeOf(key = "saved_state", default = SavedState(), enableCache = true)
+                    scope.launch {
+                        CurrentState.ThemeState.updateTheme(storage)
+                    }
+                    storage
+                }
             },
         )
     }) {
-        val storage: KStore<SavedState> = koinInject()
-
-        val scope = rememberCoroutineScope()
-
-        scope.launch {
-            CurrentState.ThemeState.updateTheme(storage)
-        }
-
         MaterialTheme(
             colorScheme = CurrentState.ThemeState.currentTheme,
         ) {
